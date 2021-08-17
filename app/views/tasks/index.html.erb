@@ -1,0 +1,22 @@
+<% trash_icon = '<i class="fas fa-trash-alt"></i>'.html_safe %>
+<% plus_icon = '<i class="fas fa-plus"></i> Add a new task'.html_safe %>
+
+<div class="container">
+  <h1>My tasks</h1>
+  <form>
+    <% @tasks.each do |task| %>
+      <div class="form-check">
+        <% if task.completed %>
+          <input id="check-<%= task.title.downcase %>" type="checkbox" checked disabled>
+        <% else %>
+          <input id="check-<%= task.title.downcase %>" type="checkbox" disabled>
+        <% end %>
+        <label for="check-<%= task.title.downcase %>"><%= link_to task.title, task_path(task) %></label>
+        <%= link_to trash_icon, task_path(task), method: :delete, data: { confirm: "Delete #{task.title}?" } %>
+      </div>
+    <% end %>
+  </form>
+  <hr>
+  <i class="fas fa-left"></i>
+  <%= link_to plus_icon, tasks_new_path %>
+</div>
